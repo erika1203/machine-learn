@@ -19,7 +19,8 @@ def load_data():
                 word_list.append(words)
                 class_list.append(class_dict[key])
         except:
-            print('Some papers missed...')
+            pass
+            # print('Some papers missed...')
     return word_list,class_list
 
 def create_vocab(word_list):
@@ -34,7 +35,8 @@ def word2vec(vocab_list,input_words):
         if word in vocab_list:
             ret_vec[vocab_list.index(word)]=1
         else:
-            print('The word:%s not exist in vocab_list...' % word)
+            pass
+            # print('The word:%s not exist in vocab_list...' % word)
     return ret_vec
 
 def train(word_mat,class_list):
@@ -68,7 +70,7 @@ def classify(word_mat, class_list, input_vec):
     plus=sum(input_vec*plus_vec)+log(plus_prob)
     result_dict={minus:-1,zero:0,plus:1}
     sort_result=sorted(result_dict.items(),key=operator.itemgetter(0),reverse=True)
-    print('The predicated result is :',sort_result[0][1])
+    # print('The predicated result is :',sort_result[0][1])
     return sort_result[0][1]
 
 def test(word_list,class_list,test_rate):
@@ -86,7 +88,7 @@ def test(word_list,class_list,test_rate):
         test_class.append(train_class[rand_index])
         del(train_set[rand_index])
         del(train_class[rand_index])
-    print('test_set:',test_set)
+    # print('test_set:',test_set)
     print('test_num:',test_num)
     error_count=0.0
     train_mat=array(test_set)
@@ -95,9 +97,10 @@ def test(word_list,class_list,test_rate):
         result=classify(train_mat,train_class,test_vec)
         if result != test_class[i]:
             error_count+=1
-            print('The actual result is :',test_class[i])
+            # print('The actual result is :',test_class[i])
     print('error_count:',error_count)
     error_rate=error_count/test_num
+    print('This error rate is %.2f' % error_rate)
     return error_rate
 
 def commit():
